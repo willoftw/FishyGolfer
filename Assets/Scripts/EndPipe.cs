@@ -14,6 +14,7 @@ public class EndPipe : MonoBehaviour
     void Start()
     {
         sr = this.GetComponent<SpriteRenderer>();
+        sr.sprite = emptySprite;
     }
 
     // Update is called once per frame
