@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FishController : MonoBehaviour
 {
-    Vector3 VScreen = new Vector3();
     Vector3 VWorld = new Vector3();
     Vector3 target = new Vector3();
     Vector3 HitVector = Vector3.zero;
@@ -14,13 +13,14 @@ public class FishController : MonoBehaviour
 
     private Rigidbody2D rb;
 
+    private Animator animator;
+
 
     // Time when the movement started.
     private float startTime;
     // Total distance between the markers.
     private float journeyLength;
 
-    private float moveDuration = 0f;  // time since moving forward started
 
     public float speed = 0.1F;
 
@@ -32,6 +32,7 @@ public class FishController : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        animator = this.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -42,11 +43,14 @@ public class FishController : MonoBehaviour
         target = (ballStartPosition + -HitVector);//*10;
  
         Debug.DrawLine(this.transform.position, target, Color.green);
-        if (moving && rb.velocity == Vector2.zero)
+        //Debug.Log(rb.velocity.magnitude);
+        animator.SetFloat("speed", rb.velocity.magnitude);
+        if (moving && rb.velocity.magnitude < 0.01f)
         {
             rb.angularVelocity = 0.0f;
             moving = false;
-            //Debug.Log("stopped");
+            
+            Debug.Log("stopped");
         }
 
         /* ray = Camera.main.ScreenPointToRay(Input.mousePosition);
@@ -103,8 +107,8 @@ public class FishController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-/*        if (moving)
-            return;*/
+        if (moving)
+            return;
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
         Debug.DrawRay(ray.origin, ray.direction * 10, Color.yellow);
         // Save the info
@@ -114,7 +118,6 @@ public class FishController : MonoBehaviour
             ballStartPosition = this.transform.position;
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             HitVector = hit.point - this.transform.position;
-            moving = true;
 
         }
 
@@ -123,8 +126,8 @@ public class FishController : MonoBehaviour
 
     private void OnMouseUp()
     {
-/*        if (moving)
-            return;*/
+        if (moving)
+            return;
         /*        startTime = Time.time;
                 ballStartPosition = this.transform.position;
                 HitVector = VWorld - this.transform.position;
@@ -141,8 +144,9 @@ public class FishController : MonoBehaviour
         */
         target = (ballStartPosition + -HitVector);//*10;
         journeyLength = Vector3.Distance(target, this.transform.position);
-        this.GetComponent<Rigidbody2D>().AddForce((target - this.transform.position)*journeyLength*10);
+        this.GetComponent<Rigidbody2D>().AddForce(((target - this.transform.position)*journeyLength)*100);
         moving = true;
+        animator.SetFloat("speed", 1.0f);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
