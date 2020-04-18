@@ -40,8 +40,10 @@ public class FishController : MonoBehaviour
         VWorld.z = 0;
         Debug.DrawLine(this.transform.position, VWorld);
         Debug.DrawLine(this.transform.position, target, Color.green);
+        if (rb.velocity == Vector2.zero)
+            moving = false;
 
-        if (moving)
+       /* if (moving)
         {
             moveDuration += Time.deltaTime;
             
@@ -67,7 +69,7 @@ public class FishController : MonoBehaviour
                 Debug.Log("Reached Target");
                 target = Vector3.zero;
             }
-        }
+        }*/
     }
 
     private void OnMouseDown()
