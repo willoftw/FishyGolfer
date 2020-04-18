@@ -27,10 +27,18 @@ public class EndPipe : MonoBehaviour
     {
         Debug.Log("HOLE");
         sr.sprite = fullSprite;
+        StartCoroutine(hideAnimation(3));
         Destroy(collision.gameObject);
 
         //TODO: Make this lerp towards top, it is effectively the "cutscene"
         GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
         Camera.main.orthographicSize = 7;
     }
+
+    private IEnumerator hideAnimation(float time)
+    {
+        yield return new WaitForSeconds(time);
+        sr.sprite = emptySprite;
+    }
+
 }
