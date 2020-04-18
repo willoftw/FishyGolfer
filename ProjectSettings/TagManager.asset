@@ -5,6 +5,8 @@ TagManager:
   serializedVersion: 2
   tags:
   - MiniMapCamera
+  - Pit
+  - Green
   layers:
   - Default
   - TransparentFX
