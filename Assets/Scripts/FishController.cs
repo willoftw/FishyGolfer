@@ -54,7 +54,7 @@ public class FishController : MonoBehaviour
             float fractionOfJourney = distCovered / journeyLength;
 
            // distCovered -= Mathf.Abs(speed * (maxSpeed/dragFactor));
-            Debug.Log(speed);
+            //Debug.Log(speed);
             
             // Set our position as a fraction of the distance between the markers.
             transform.position = Vector3.Lerp(ballStartPosition, ballStartPosition + -HitVector, fractionOfJourney);
@@ -103,4 +103,5 @@ public class FishController : MonoBehaviour
         //this.GetComponent<Rigidbody2D>().AddForce((this.transform.position + -HitVector * -1) * (Vector3.Distance(VWorld,this.transform.position)*10));
         moving = true;
     }
+
 }
