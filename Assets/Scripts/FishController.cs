@@ -6,6 +6,7 @@ public class FishController : MonoBehaviour
 {
     Vector3 VScreen = new Vector3();
     Vector3 VWorld = new Vector3();
+    Vector3 target = new Vector3();
     Vector3 HitVector = Vector3.zero;
 
     Vector3 ballStartPosition;
@@ -38,7 +39,7 @@ public class FishController : MonoBehaviour
 
         VWorld.z = 0;
         Debug.DrawLine(this.transform.position, VWorld);
-        Debug.DrawLine(this.transform.position, this.transform.position + -HitVector, Color.green);
+        Debug.DrawLine(this.transform.position, target, Color.green);
 
         if (moving)
         {
@@ -53,17 +54,18 @@ public class FishController : MonoBehaviour
             // Fraction of journey completed equals current distance divided by total distance.
             float fractionOfJourney = distCovered / journeyLength;
 
-           // distCovered -= Mathf.Abs(speed * (maxSpeed/dragFactor));
+            // distCovered -= Mathf.Abs(speed * (maxSpeed/dragFactor));
             //Debug.Log(speed);
-            
+
             // Set our position as a fraction of the distance between the markers.
-            transform.position = Vector3.Lerp(ballStartPosition, ballStartPosition + -HitVector, fractionOfJourney);
-            Debug.DrawLine(ballStartPosition, ballStartPosition + -HitVector, Color.blue);
-            if (Vector3.Distance(ballStartPosition + -HitVector, this.transform.position) < 0.01f)
+            transform.position = Vector3.Lerp(ballStartPosition, target, fractionOfJourney);
+            Debug.DrawLine(ballStartPosition, target, Color.blue);
+            if (Vector3.Distance(target, this.transform.position) < 0.01f)
             {
                 rb.velocity = Vector3.zero;
                 moving = false;
                 Debug.Log("Reached Target");
+                target = Vector3.zero;
             }
         }
     }
@@ -91,21 +93,26 @@ public class FishController : MonoBehaviour
             return;
         startTime = Time.time;
         ballStartPosition = this.transform.position;
-        
+        HitVector = VWorld - this.transform.position;
+
+        target = (ballStartPosition + -HitVector);//*10;
+        //target.Scale(new Vector3(2.0f, 2.0f, 2.0f));
+
         // Calculate the journey length.
-        journeyLength = Vector3.Distance(ballStartPosition + -HitVector, this.transform.position);
+        journeyLength = Vector3.Distance(target, this.transform.position);
         speed = journeyLength/2;
         maxSpeed = speed;
         Debug.LogFormat("speed: {0} length: {1}", speed, journeyLength);
 
-        HitVector = VWorld - this.transform.position;
 
-        //this.GetComponent<Rigidbody2D>().AddForce((this.transform.position + -HitVector * -1) * (Vector3.Distance(VWorld,this.transform.position)*10));
+        this.GetComponent<Rigidbody2D>().AddForce(target * journeyLength * 10);
         moving = true;
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        ContactPoint2D contact = collision.GetContact(0);
+        this.transform.position = new Vector3(contact.point.x,contact.point.y,0);
         Debug.Log("Fish Collided");
     }
 
