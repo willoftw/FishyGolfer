@@ -226,6 +226,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 38269006e4ebbc447bdf4669957ebec0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocityCurve:
+    serializedVersion: 2
+    m_Curve: []
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  speed: 1
+  dragFactor: 1000
 --- !u!212 &1519979603
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -320,8 +328,8 @@ Rigidbody2D:
   m_LinearDrag: 0
   m_AngularDrag: 0.05
   m_GravityScale: 0
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 6200000, guid: a2f70714d4a846445b2bfcbf3cf0f989, type: 2}
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4

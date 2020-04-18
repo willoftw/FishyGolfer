@@ -11,15 +11,21 @@ public class FishController : MonoBehaviour
     Vector3 ballStartPosition;
 
     private Rigidbody2D rb;
+    public AnimationCurve velocityCurve;
 
     // Time when the movement started.
     private float startTime;
     // Total distance between the markers.
     private float journeyLength;
 
+    private float moveDuration = 0f;  // time since moving forward started
+
     public float speed = 0.1F;
 
     bool moving = false;
+    private float maxSpeed;
+    public float dragFactor=1000;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -36,14 +42,20 @@ public class FishController : MonoBehaviour
 
         if (moving)
         {
+            moveDuration += Time.deltaTime;
+            
+           // Debug.Log(Mathf.Lerp(1.0f, 0.1f, distCovered));
             // Distance moved equals elapsed time times speed..
             float distCovered = (Time.time - startTime) * speed;
-            
 
+
+           // distCovered = Mathf.LerpUnclamped(maxSpeed, 0.1f, (Time.time - startTime));
             // Fraction of journey completed equals current distance divided by total distance.
             float fractionOfJourney = distCovered / journeyLength;
-            //Debug.Log(fractionOfJourney);
 
+           // distCovered -= Mathf.Abs(speed * (maxSpeed/dragFactor));
+            Debug.Log(speed);
+            
             // Set our position as a fraction of the distance between the markers.
             transform.position = Vector3.Lerp(ballStartPosition, ballStartPosition + -HitVector, fractionOfJourney);
             Debug.DrawLine(ballStartPosition, ballStartPosition + -HitVector, Color.blue);
@@ -81,8 +93,9 @@ public class FishController : MonoBehaviour
         ballStartPosition = this.transform.position;
         
         // Calculate the journey length.
-        journeyLength = Vector3.Distance(VWorld, this.transform.position);
-        speed = journeyLength;
+        journeyLength = Vector3.Distance(ballStartPosition + -HitVector, this.transform.position);
+        speed = journeyLength/2;
+        maxSpeed = speed;
         Debug.LogFormat("speed: {0} length: {1}", speed, journeyLength);
 
         HitVector = VWorld - this.transform.position;
