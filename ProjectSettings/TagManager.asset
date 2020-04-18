@@ -7,6 +7,7 @@ TagManager:
   - MiniMapCamera
   - Pit
   - Green
+  - Indicator
   layers:
   - Default
   - TransparentFX

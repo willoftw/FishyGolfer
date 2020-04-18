@@ -45,7 +45,7 @@ public class FishController : MonoBehaviour
         Debug.DrawLine(this.transform.position, target, Color.green);
         //Debug.Log(rb.velocity.magnitude);
         animator.SetFloat("speed", rb.velocity.magnitude);
-        if (moving && rb.velocity.magnitude < 0.01f)
+        if (moving && rb.velocity.magnitude < 0.05f)
         {
             rb.angularVelocity = 0.0f;
             moving = false;
@@ -118,10 +118,30 @@ public class FishController : MonoBehaviour
             ballStartPosition = this.transform.position;
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             HitVector = hit.point - this.transform.position;
+            Vector3 scale = GameObject.FindGameObjectWithTag("Indicator").transform.localScale;
+            scale.y = HitVector.x;
+            
+            GameObject.FindGameObjectWithTag("Indicator").transform.localScale = scale;
+            target = (ballStartPosition + -HitVector);//*10;
+            journeyLength = Vector3.Distance(target, this.transform.position);
+
+
+            DrawLine(this.transform.position, ((target - this.transform.position) * journeyLength),Color.blue, 0.2f);
 
         }
 
 
+    }
+
+    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
+    {
+        LineRenderer lr = this.GetComponent<LineRenderer>();
+        lr.sortingOrder = 98;
+        lr.material = new Material(Shader.Find("UI/Default"));
+        lr.SetColors(color, color);
+        lr.SetWidth(0.1f, 0.1f);
+        lr.SetPosition(0, start);
+        lr.SetPosition(1, end);
     }
 
     private void OnMouseUp()
@@ -151,9 +171,25 @@ public class FishController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        ContactPoint2D contact = collision.GetContact(0);
-        this.transform.position = new Vector3(contact.point.x,contact.point.y,0);
-        Debug.Log("Fish Collided");
+        if (collision.collider.tag == "Pit")
+        {
+
+        }
+        else if (collision.collider.tag == "Green")
+        {
+
+        }
+        else
+        {
+            ContactPoint2D contact = collision.GetContact(0);
+            this.transform.position = new Vector3(contact.point.x, contact.point.y, 0);
+        }
+        Debug.Log("Fish Collided with: " + collision.gameObject.tag);
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        Debug.Log("Triggered Pit");
     }
 
 }
