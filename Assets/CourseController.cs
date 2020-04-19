@@ -5,6 +5,9 @@ using UnityEngine;
 public class CourseController : MonoBehaviour
 {
     public GameObject StartPoint;
+
+    public string Dialog;
+
     // Start is called before the first frame update
     void Start()
     {

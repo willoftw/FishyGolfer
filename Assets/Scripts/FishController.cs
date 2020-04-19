@@ -41,7 +41,7 @@ public class FishController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER|| GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE)
             return;
         target = (ballStartPosition + -HitVector);//*10;
         Debug.DrawLine(this.transform.position, target, Color.green);
@@ -80,7 +80,7 @@ public class FishController : MonoBehaviour
 
     private void OnMouseDrag()
     {
-        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER || GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE)
             return;
         if (moving)
             return;
@@ -119,7 +119,7 @@ public class FishController : MonoBehaviour
 
     private void OnMouseUp()
     {
-        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER || GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE)
             return;
         if (moving)
             return;

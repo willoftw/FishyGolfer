@@ -93,6 +93,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void loadLevel(int level)
     {
+        gameState = GameState.DIALOG;
         currentLevel = level;
         goldFish.SetActive(true);
         winScreen.SetActive(false);
@@ -133,5 +134,10 @@ public class GameManager : Singleton<GameManager>
         gameOverScreen.SetActive(false);
         yield return new WaitForSeconds(time);
 
+    }
+
+    public CourseController getActiveCourseController()
+    {
+        return levels[currentLevel].GetComponent<CourseController>();
     }
 }
