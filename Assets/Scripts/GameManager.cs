@@ -51,7 +51,7 @@ public class GameManager : Singleton<GameManager>
             return;
         gameState = GameState.PAUSED;
 
-        StartCoroutine(showWinCanvas(1));
+        StartCoroutine(showWinCanvas(0));
 
         //goldFish.GetComponent<FishController>().Die();
     }
