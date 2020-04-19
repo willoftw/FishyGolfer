@@ -7,6 +7,7 @@ public class CameraFollower : MonoBehaviour
 
     public GameObject player;        //Public variable to store a reference to the player game object
 
+    public float transistionSpeed = 1.0f;
 
     public Vector3 offset;            //Private variable to store the offset distance between the player and camera
 
@@ -27,9 +28,13 @@ public class CameraFollower : MonoBehaviour
         // Set the position of the camera's transform to be the same as the player's, but offset by the calculated offset distance.
         try
         {
-            Debug.Log(offset);
+       //     Debug.Log(offset);
             //transform.position = player.transform.position + offset;
-            StartCoroutine(LerpTo(player.transform.position + offset,1.0f));
+            StartCoroutine(LerpTo(player.transform.position + offset,transistionSpeed));
+            if(Vector3.Distance(transform.position, (player.transform.position + offset))<0.5f)
+            {
+                transistionSpeed = 1.0f;
+            }
         }
         catch (Exception e)
         {
@@ -49,11 +54,13 @@ public class CameraFollower : MonoBehaviour
 
     IEnumerator LerpTo(Vector3 pos2, float duration)
     {
-        for (float t = 0f; t < duration; t += Time.deltaTime)
+        for (float t = 0f; t <= duration; t += Time.deltaTime)
         {
             transform.position = Vector3.Lerp(this.transform.position, pos2, t / duration);
+
             yield return 0;
         }
+        
         transform.position = pos2;
     }
 }
