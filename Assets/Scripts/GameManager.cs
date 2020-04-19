@@ -20,6 +20,8 @@ public class GameManager : Singleton<GameManager>
 
     public List<GameObject> levels;
 
+    float timeSinceLastCall;
+
     public bool isGameOver { get; set; } = false;
     // Start is called before the first frame update
     void Start()
@@ -30,6 +32,7 @@ public class GameManager : Singleton<GameManager>
     // Update is called once per frame
     void Update()
     {
+        timeSinceLastCall += Time.deltaTime;
     }
     public void AddStrokes(int strokes)
     {
@@ -59,6 +62,11 @@ public class GameManager : Singleton<GameManager>
         
         if (GameManager.Instance.gameState == GameManager.GameState.PAUSED)
             return;
+
+        if (timeSinceLastCall < 10)
+            return;
+
+        timeSinceLastCall = 0;
         CalculateScore();
         gameState = GameState.PAUSED;
 
@@ -90,10 +98,7 @@ public class GameManager : Singleton<GameManager>
 
     public void LoadNextHole()
     {
-        currentLevel++;
-        loadLevel(currentLevel);
-        goldFish.SetActive(true);
-        winScreen.SetActive(false);
+        StartCoroutine(delayLoad(1.0f));
     }
 
     public void ReloadCourse()
@@ -108,5 +113,16 @@ public class GameManager : Singleton<GameManager>
         goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
+    }
+
+    private IEnumerator delayLoad(float time)
+    {
+        currentLevel++;
+        loadLevel(currentLevel);
+        goldFish.SetActive(true);
+        winScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
+        yield return new WaitForSeconds(time);
+
     }
 }

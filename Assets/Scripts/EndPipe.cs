@@ -7,7 +7,7 @@ public class EndPipe : MonoBehaviour
 
     public Sprite emptySprite;
     public Sprite fullSprite;
-    public float maxFishVelocity = 0.5f;
+    public float maxFishVelocity = 10.5f;//0.5
 
     private SpriteRenderer sr;
 
@@ -66,10 +66,6 @@ public class EndPipe : MonoBehaviour
         sr.sprite = fullSprite;
         StartCoroutine(hideAnimation(1));
         collider.gameObject.SetActive(false);
-
-        //TODO: Make this lerp towards top, it is effectively the "cutscene"
-        //GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
-        Camera.main.orthographicSize = 7;
     }
 
     private IEnumerator hideAnimation(float time)
@@ -77,6 +73,7 @@ public class EndPipe : MonoBehaviour
         yield return new WaitForSeconds(time);
         sr.sprite = emptySprite;
         GameManager.Instance.Win();
+        
     }
 
 }

@@ -88,7 +88,7 @@ public class FishController : MonoBehaviour
 
         target = (ballStartPosition + -HitVector);//*10;
         journeyLength = Vector3.Distance(target, this.transform.position);
-        Debug.Log(journeyLength);
+       // Debug.Log(journeyLength);
         Color c;
         if (journeyLength > 4)
             c = Color.red;

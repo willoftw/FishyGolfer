@@ -21,6 +21,7 @@ public class WinController : MonoBehaviour
 
     public void LoadNextHole()
     {
+        Debug.Log("Loading Next Hole");
         GameManager.Instance.LoadNextHole();
     }
 
