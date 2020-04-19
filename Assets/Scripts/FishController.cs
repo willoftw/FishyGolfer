@@ -15,6 +15,8 @@ public class FishController : MonoBehaviour
 
     private Animator animator;
 
+    private LineRenderer lr;
+
 
     // Time when the movement started.
     private float startTime;
@@ -33,6 +35,7 @@ public class FishController : MonoBehaviour
     {
         rb = this.GetComponent<Rigidbody2D>();
         animator = this.GetComponent<Animator>();
+        lr = this.GetComponent<LineRenderer>();
     }
 
     // Update is called once per frame
@@ -118,15 +121,11 @@ public class FishController : MonoBehaviour
             ballStartPosition = this.transform.position;
             Debug.DrawLine(transform.position, hit.point, Color.cyan);
             HitVector = hit.point - this.transform.position;
-            Vector3 scale = GameObject.FindGameObjectWithTag("Indicator").transform.localScale;
-            scale.y = HitVector.x;
-            
-            GameObject.FindGameObjectWithTag("Indicator").transform.localScale = scale;
             target = (ballStartPosition + -HitVector);//*10;
             journeyLength = Vector3.Distance(target, this.transform.position);
 
 
-            DrawLine(this.transform.position, ((target - this.transform.position) * journeyLength),Color.blue, 0.2f);
+            DrawLine(this.transform.position, target,Color.blue, 0.2f);
 
         }
 
@@ -135,7 +134,6 @@ public class FishController : MonoBehaviour
 
     void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
     {
-        LineRenderer lr = this.GetComponent<LineRenderer>();
         lr.sortingOrder = 98;
         lr.material = new Material(Shader.Find("UI/Default"));
         lr.SetColors(color, color);
@@ -148,20 +146,11 @@ public class FishController : MonoBehaviour
     {
         if (moving)
             return;
-        /*        startTime = Time.time;
-                ballStartPosition = this.transform.position;
-                HitVector = VWorld - this.transform.position;
 
-        target = (ballStartPosition + -HitVector);//*10;
-                //target.Scale(new Vector3(2.0f, 2.0f, 2.0f));
+        //Remove the pointer
+        lr.SetPosition(0, Vector3.zero);
+        lr.SetPosition(1, Vector3.zero);
 
-                // Calculate the journey length.
-                journeyLength = Vector3.Distance(target, this.transform.position);
-                speed = journeyLength/2;
-                maxSpeed = speed;
-                Debug.LogFormat("speed: {0} length: {1}", speed, journeyLength);
-
-        */
         target = (ballStartPosition + -HitVector);//*10;
         journeyLength = Vector3.Distance(target, this.transform.position);
         this.GetComponent<Rigidbody2D>().AddForce(((target - this.transform.position)*journeyLength)*100);
