@@ -2,30 +2,34 @@
 using UnityEngine.UI;
 using System.Collections;
 using TMPro;
+using System;
 
-public class StatusTracker : MonoBehaviour
+public class StatusTracker : Singleton<StatusTracker>
 {
     public int totalSections = 12;
-    public float timeLeftInSeconds = 300.0f; //in seconds
-    private float startTime = 0;
+    public float TotalTimeInSeconds = 300.0f; //in seconds
+    public float timeLeft = 0;
+    //private float startTime = 0;
     public float timeUnitPerDash;
+
+    private bool paused = false;
 
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI strokeCountText;
 
     void Start()
     {
-        startTime = timeLeftInSeconds;
-        timeUnitPerDash = startTime / totalSections;
+        timeLeft = TotalTimeInSeconds;
+        timeUnitPerDash = TotalTimeInSeconds / totalSections;
     }
     void Update()
     {
-        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE)
+        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE || paused)
             return;
-        timeLeftInSeconds -= Time.deltaTime;
+        timeLeft -= Time.deltaTime;
         string timeLeftVisual = "";
-        //Debug.Log(timeLeftInSeconds / timeUnitPerDash);
-        int dashesRemaining = (int)(timeLeftInSeconds / timeUnitPerDash);
+        Debug.Log(timeLeft);
+        int dashesRemaining = (int)(timeLeft / timeUnitPerDash);
 
         if (dashesRemaining < (totalSections/4))
         {
@@ -45,7 +49,7 @@ public class StatusTracker : MonoBehaviour
             timeLeftVisual += "-";
         }
         timerText.text = timeLeftVisual;
-        if (timeLeftInSeconds < 0)
+        if (timeLeft < 0)
         {
             //Trigger somthing
             GameManager.Instance.GameOver();
@@ -53,4 +57,21 @@ public class StatusTracker : MonoBehaviour
 
         strokeCountText.text = "Stroke Number: " + GameManager.Instance.strokeCount;
     }
+
+    public void Reset()
+    {
+        paused = false;
+        timeLeft = TotalTimeInSeconds;
+    }
+
+    internal void Pause()
+    {
+        paused = true;
+    }
+
+    //yuck
+    /*    public void Pause()
+        {
+            timeLeft = float.PositiveInfinity;
+        }*/
 }

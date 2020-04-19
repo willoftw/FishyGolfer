@@ -28,6 +28,7 @@ public class FishController : MonoBehaviour
     public float dragFactor = 1000;
 
     public Sprite deadFishSprite;
+    public Sprite aliveFishSprite;
 
     // Start is called before the first frame update
     void Start()
@@ -49,9 +50,10 @@ public class FishController : MonoBehaviour
         //Debug.Log(rb.velocity.magnitude);
         animator.SetFloat("speed", rb.velocity.magnitude);
 
-        if (moving && rb.velocity.magnitude < 0.05f)
+        if (moving && rb.velocity.magnitude < 0.1f)
         {
             rb.angularVelocity = 0.0f;
+            rb.angularDrag = 100.0f;
             moving = false;
             
             Debug.Log("stopped");
@@ -78,6 +80,8 @@ public class FishController : MonoBehaviour
 
     private void OnMouseDrag()
     {
+        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER || GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+            return;
         if (moving)
             return;
         ballStartPosition = this.transform.position;
@@ -99,6 +103,8 @@ public class FishController : MonoBehaviour
 
     private void OnMouseUp()
     {
+        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER || GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+            return;
         if (moving)
             return;
 
@@ -133,6 +139,12 @@ public class FishController : MonoBehaviour
         Debug.Log("Dieing");
         this.GetComponent<SpriteRenderer>().sprite = deadFishSprite;
         animator.enabled = false;
+    }
+
+    public void Reset()
+    {
+        this.GetComponent<SpriteRenderer>().sprite = aliveFishSprite;
+        animator.enabled = true;
     }
 
 }

@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     public enum GameState { ACTIVE,PAUSED,GAMEOVER} // will add levels here too later
     public int strokeCount {get; protected set; } = 0; // How many strokes it took to get to the hole
-    int arregatedScore { get; set; } = 0; // Strokes devided by how much time you took;
+    public int arregatedScore { get; set; } = 0; // Strokes devided by how much time you took;
 
     public int currentLevel = 0;
 
@@ -16,6 +16,7 @@ public class GameManager : Singleton<GameManager>
     public GameObject gameOverScreen;
     public GameObject winScreen;
     public GameObject goldFish;
+    public GameObject gameStatus;
 
     public List<GameObject> levels;
 
@@ -35,11 +36,17 @@ public class GameManager : Singleton<GameManager>
         strokeCount += strokes;
     }
 
-
+    void CalculateScore()
+    {
+        arregatedScore = (int)(StatusTracker.Instance.timeLeft / strokeCount);
+        Debug.Log(arregatedScore);
+    }
     internal void GameOver()
     {
+        
         if (GameManager.Instance.gameState == GameManager.GameState.PAUSED)
             return;
+        CalculateScore();
         gameState = GameState.PAUSED;
 
         StartCoroutine(showGameOverCanvas(3));
@@ -49,8 +56,10 @@ public class GameManager : Singleton<GameManager>
 
     internal void Win()
     {
+        
         if (GameManager.Instance.gameState == GameManager.GameState.PAUSED)
             return;
+        CalculateScore();
         gameState = GameState.PAUSED;
 
         StartCoroutine(showWinCanvas(0));
@@ -74,13 +83,30 @@ public class GameManager : Singleton<GameManager>
         Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
         gameState = GameState.ACTIVE;
         goldFish.transform.position = levels[level].GetComponent<CourseController>().StartPoint.transform.position;
+        goldFish.GetComponent<FishController>().Reset();
+        StatusTracker.Instance.Reset();
+        strokeCount = 0;
     }
 
-    public void loadNextLevel()
+    public void LoadNextHole()
     {
         currentLevel++;
         loadLevel(currentLevel);
         goldFish.SetActive(true);
         winScreen.SetActive(false);
+    }
+
+    public void ReloadCourse()
+    {
+        currentLevel = 0;
+        loadLevel(currentLevel);
+    }
+
+    public void ReloadHole()
+    {
+        loadLevel(currentLevel);
+        goldFish.SetActive(true);
+        winScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
     }
 }

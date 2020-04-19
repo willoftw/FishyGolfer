@@ -59,9 +59,12 @@ public class EndPipe : MonoBehaviour
 
     void Scored(Collider2D collider)
     {
+  
         Debug.Log("Scored");
+        StatusTracker.Instance.Pause();
+        //StatusTracker.Instance.Pause();
         sr.sprite = fullSprite;
-        StartCoroutine(hideAnimation(3));
+        StartCoroutine(hideAnimation(1));
         collider.gameObject.SetActive(false);
 
         //TODO: Make this lerp towards top, it is effectively the "cutscene"

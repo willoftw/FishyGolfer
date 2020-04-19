@@ -6,6 +6,7 @@ using UnityEngine;
 public class GameOverController : MonoBehaviour
 {
     public TextMeshProUGUI punText;
+    public TextMeshProUGUI scoreText;
     public List<string> gameOverPuns = new List<string>()
     {
         "That couldnt have Breem easier!",
@@ -22,7 +23,7 @@ public class GameOverController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        scoreText.text = "Score:" + GameManager.Instance.arregatedScore;
     }
 
     //Misleading Name, they arnt that Witty.
@@ -30,5 +31,20 @@ public class GameOverController : MonoBehaviour
     {
         var random = new Random();
         punText.text = gameOverPuns[Random.Range(0, gameOverPuns.Count)];
+    }
+
+    public void LoadNextHole()
+    {
+        GameManager.Instance.LoadNextHole();
+    }
+
+    public void replayCourse()
+    {
+        GameManager.Instance.ReloadCourse();
+    }
+
+    public void replayHole()
+    {
+        GameManager.Instance.ReloadHole();
     }
 }
