@@ -46,7 +46,7 @@ public class StatusTracker : MonoBehaviour
         if (timeLeftInSeconds < 0)
         {
             //Trigger somthing
-            GameManager.Instance.isGameOver = true;
+            GameManager.Instance.GameOver();
         }
 
         strokeCountText.text = "Stroke Number: " + GameManager.Instance.strokeCount;

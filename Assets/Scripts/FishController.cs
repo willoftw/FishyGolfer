@@ -10,7 +10,7 @@ public class FishController : MonoBehaviour
 
     private Rigidbody2D rb;
 
-    private Animator animator;
+    public Animator animator;
 
     private LineRenderer lr;
 
@@ -25,7 +25,7 @@ public class FishController : MonoBehaviour
 
     public bool moving = false;
     private float maxSpeed;
-    public float dragFactor=1000;
+    public float dragFactor = 1000;
 
     public Sprite deadFishSprite;
 
@@ -40,7 +40,8 @@ public class FishController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        if (GameManager.Instance.gameState == GameManager.GameState.GAMEOVER|| GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+            return;
         target = (ballStartPosition + -HitVector);//*10;
         Debug.DrawLine(this.transform.position, target, Color.green);
 
@@ -67,11 +68,6 @@ public class FishController : MonoBehaviour
             HitVector = hit.point - this.transform.position;
         }
         
-        if (GameManager.Instance.isGameOver)
-        {
-            GetComponent<SpriteRenderer>().sprite = deadFishSprite;
-            animator.enabled = false;
-        }
 
     }
 
@@ -130,6 +126,13 @@ public class FishController : MonoBehaviour
     private void OnTriggerEnter(Collider other)
     {
 
+    }
+
+    public void Die()
+    {
+        Debug.Log("Dieing");
+        this.GetComponent<SpriteRenderer>().sprite = deadFishSprite;
+        animator.enabled = false;
     }
 
 }
