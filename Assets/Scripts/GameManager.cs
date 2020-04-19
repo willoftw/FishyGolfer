@@ -108,7 +108,7 @@ public class GameManager : Singleton<GameManager>
             dialogScreen.GetComponent<DialogController>().ReplayDialog();
         }
         //gameState = GameState.ACTIVE;
-
+        while (goldFish == null) { }
         goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
@@ -151,6 +151,15 @@ public class GameManager : Singleton<GameManager>
 
     public CourseController getActiveCourseController()
     {
-        return levels[currentLevel].GetComponent<CourseController>();
+        try
+        {
+            return levels[currentLevel].GetComponent<CourseController>();
+        }
+        catch(Exception e)
+        {
+            currentLevel = 0;
+            loadLevel(currentLevel, true);
+            return levels[currentLevel].GetComponent<CourseController>();
+        }
     }
 }

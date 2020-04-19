@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class GameOverController : MonoBehaviour
 {
@@ -46,5 +47,11 @@ public class GameOverController : MonoBehaviour
     public void replayHole()
     {
         GameManager.Instance.ReloadHole();
+    }
+
+    public void BackToMainMenu()
+    {
+        Destroy(GameManager.Instance);
+        SceneManager.LoadScene(0);
     }
 }

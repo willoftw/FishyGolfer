@@ -46,7 +46,7 @@ public class StatusTracker : Singleton<StatusTracker>
 
         for (int i = 0; i < dashesRemaining; i++)
         {
-            timeLeftVisual += "O";
+            timeLeftVisual += "|";
         }
         timerText.text = "Oxygen: " + timeLeftVisual;
         if (timeLeft < 0)
@@ -55,7 +55,7 @@ public class StatusTracker : Singleton<StatusTracker>
             GameManager.Instance.GameOver();
         }
 
-        strokeCountText.text = "Stroke Number: " + GameManager.Instance.strokeCount;
+        strokeCountText.text = "" + GameManager.Instance.strokeCount;
     }
 
     public void Reset()
