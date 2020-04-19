@@ -29,7 +29,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         //initial Level Loaded
-       loadLevel(0);
+       loadLevel(5);
     }
 
     // Update is called once per frame
@@ -93,13 +93,17 @@ public class GameManager : Singleton<GameManager>
         yield return new WaitForSeconds(time);
         winScreen.SetActive(true);
     }
-    public void loadLevel(int level)
+    public void loadLevel(int level, bool isRestart=false)
     {
         currentLevel = level;
 
-        gameState = GameState.DIALOG;
-        dialogScreen.SetActive(true);
-        dialogScreen.GetComponent<DialogController>().ReplayDialog();
+        if (!isRestart)
+        {
+            gameState = GameState.DIALOG;
+            dialogScreen.SetActive(true);
+            dialogScreen.GetComponent<DialogController>().ReplayDialog();
+        }
+        gameState = GameState.ACTIVE;
 
         goldFish.SetActive(true);
         winScreen.SetActive(false);
@@ -119,12 +123,12 @@ public class GameManager : Singleton<GameManager>
     public void ReloadCourse()
     {
         currentLevel = 0;
-        loadLevel(currentLevel);
+        loadLevel(currentLevel,true);
     }
 
     public void ReloadHole()
     {
-        loadLevel(currentLevel);
+        loadLevel(currentLevel,true);
         goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
