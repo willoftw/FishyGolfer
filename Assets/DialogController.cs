@@ -13,6 +13,13 @@ public class DialogController : MonoBehaviour
 		fullText = GameManager.Instance.getActiveCourseController().Dialog;
 		speechText.text = "";
 
+		//StartCoroutine(PlayDialog());
+	}
+
+	public void ReplayDialog()
+	{
+		fullText = GameManager.Instance.getActiveCourseController().Dialog;
+		speechText.text = "";
 		StartCoroutine(PlayDialog());
 	}
 

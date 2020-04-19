@@ -11,10 +11,12 @@ public class GameManager : Singleton<GameManager>
 
     public int currentLevel = 0;
 
-    public GameState gameState = GameState.ACTIVE;
+    public GameState gameState = GameState.DIALOG;
 
     public GameObject gameOverScreen;
     public GameObject winScreen;
+    public GameObject dialogScreen;
+
     public GameObject goldFish;
     public GameObject gameStatus;
 
@@ -93,13 +95,16 @@ public class GameManager : Singleton<GameManager>
     }
     public void loadLevel(int level)
     {
-        gameState = GameState.DIALOG;
         currentLevel = level;
+
+        gameState = GameState.DIALOG;
+        dialogScreen.SetActive(true);
+        dialogScreen.GetComponent<DialogController>().ReplayDialog();
+
         goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
-        gameState = GameState.ACTIVE;
         goldFish.transform.position = levels[level].GetComponent<CourseController>().StartPoint.transform.position;
         goldFish.GetComponent<FishController>().Reset();
         StatusTracker.Instance.Reset();

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -156,7 +157,14 @@ public class FishController : MonoBehaviour
     {
         Debug.Log("Dieing");
         this.GetComponent<SpriteRenderer>().sprite = deadFishSprite;
-        animator.enabled = false;
+        try
+        {
+            animator.enabled = false;
+        }
+        catch (Exception e)
+        {
+
+        }
     }
 
     public void Reset()
