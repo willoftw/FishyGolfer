@@ -46,9 +46,9 @@ public class StatusTracker : Singleton<StatusTracker>
 
         for (int i = 0; i < dashesRemaining; i++)
         {
-            timeLeftVisual += "-";
+            timeLeftVisual += "O";
         }
-        timerText.text = timeLeftVisual;
+        timerText.text = "Oxygen: " + timeLeftVisual;
         if (timeLeft < 0)
         {
             //Trigger somthing
