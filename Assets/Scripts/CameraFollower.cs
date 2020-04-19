@@ -31,10 +31,6 @@ public class CameraFollower : MonoBehaviour
        //     Debug.Log(offset);
             //transform.position = player.transform.position + offset;
             StartCoroutine(LerpTo(player.transform.position + offset,transistionSpeed));
-            if(Vector3.Distance(transform.position, (player.transform.position + offset))<0.5f)
-            {
-                transistionSpeed = 1.0f;
-            }
         }
         catch (Exception e)
         {
@@ -57,10 +53,11 @@ public class CameraFollower : MonoBehaviour
         for (float t = 0f; t <= duration; t += Time.deltaTime)
         {
             transform.position = Vector3.Lerp(this.transform.position, pos2, t / duration);
-
             yield return 0;
         }
+
         
         transform.position = pos2;
+
     }
 }

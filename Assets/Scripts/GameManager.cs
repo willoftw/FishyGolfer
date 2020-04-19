@@ -23,7 +23,7 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-        loadLevel(0);
+       loadLevel(0);
     }
 
     // Update is called once per frame
@@ -71,7 +71,7 @@ public class GameManager : Singleton<GameManager>
     }
     public void loadLevel(int level)
     {
-        Camera.main.GetComponent<CameraFollower>().transistionSpeed = 100.0f;
+        Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
         gameState = GameState.ACTIVE;
         goldFish.transform.position = levels[level].GetComponent<CourseController>().StartPoint.transform.position;
     }
@@ -80,5 +80,7 @@ public class GameManager : Singleton<GameManager>
     {
         currentLevel++;
         loadLevel(currentLevel);
+        goldFish.SetActive(true);
+        winScreen.SetActive(false);
     }
 }

@@ -38,10 +38,10 @@ public class EndPipe : MonoBehaviour
         }
         sr.sprite = fullSprite;
         StartCoroutine(hideAnimation(3));
-        Destroy(collider.gameObject);
+        //Destroy(collider.gameObject);
 
         //TODO: Make this lerp towards top, it is effectively the "cutscene"
-        GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
+        //GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
         Camera.main.orthographicSize = 7;
     }
 
@@ -65,7 +65,7 @@ public class EndPipe : MonoBehaviour
         collider.gameObject.SetActive(false);
 
         //TODO: Make this lerp towards top, it is effectively the "cutscene"
-        GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
+        //GameObject.FindGameObjectWithTag("MiniMapCamera").SetActive(false);
         Camera.main.orthographicSize = 7;
     }
 

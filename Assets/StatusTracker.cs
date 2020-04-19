@@ -20,6 +20,8 @@ public class StatusTracker : MonoBehaviour
     }
     void Update()
     {
+        if (GameManager.Instance.gameState != GameManager.GameState.ACTIVE)
+            return;
         timeLeftInSeconds -= Time.deltaTime;
         string timeLeftVisual = "";
         //Debug.Log(timeLeftInSeconds / timeUnitPerDash);
