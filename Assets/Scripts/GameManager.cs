@@ -17,6 +17,8 @@ public class GameManager : Singleton<GameManager>
     public GameObject winScreen;
     public GameObject goldFish;
 
+    public List<GameObject> levels;
+
     public bool isGameOver { get; set; } = false;
     // Start is called before the first frame update
     void Start()
@@ -69,6 +71,6 @@ public class GameManager : Singleton<GameManager>
     }
     public void loadLevel(int level)
     {
-
+        gameState = GameState.ACTIVE;
     }
 }
