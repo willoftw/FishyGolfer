@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class GameManager : Singleton<GameManager>
 {
-    public enum GameState { ACTIVE,PAUSED,GAMEOVER} // will add levels here too later
+    public enum GameState { ACTIVE,PAUSED,GAMEOVER,DIALOG} // will add levels here too later
     public int strokeCount {get; protected set; } = 0; // How many strokes it took to get to the hole
     public int aggregatedScore { get; set; } = 0; // Strokes devided by how much time you took;
 
@@ -27,7 +27,7 @@ public class GameManager : Singleton<GameManager>
     void Start()
     {
         //initial Level Loaded
-       loadLevel(5);
+       loadLevel(0);
     }
 
     // Update is called once per frame
