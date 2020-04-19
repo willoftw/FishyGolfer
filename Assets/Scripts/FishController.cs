@@ -27,6 +27,8 @@ public class FishController : MonoBehaviour
     private float maxSpeed;
     public float dragFactor=1000;
 
+    public Sprite deadFishSprite;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -65,6 +67,11 @@ public class FishController : MonoBehaviour
             HitVector = hit.point - this.transform.position;
         }
         
+        if (GameManager.Instance.isGameOver)
+        {
+            GetComponent<SpriteRenderer>().sprite = deadFishSprite;
+            animator.enabled = false;
+        }
 
     }
 
@@ -108,6 +115,8 @@ public class FishController : MonoBehaviour
 
         //force animation to start rather than waiting for velocity to climb (therfore being framerate dependant)
         animator.SetFloat("speed", 1.0f);
+
+        GameManager.Instance.AddStrokes(1);
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
