@@ -7,6 +7,7 @@ public class CourseController : MonoBehaviour
     public GameObject StartPoint;
 
     public string Dialog;
+    public bool isFinal = false;
 
     // Start is called before the first frame update
     void Start()

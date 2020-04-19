@@ -30,8 +30,17 @@ public class DialogController : MonoBehaviour
 			speechText.text += c;
 			yield return new WaitForSeconds(0.100f);
 		}
-		GameManager.Instance.gameState = GameManager.GameState.ACTIVE;
-		this.gameObject.SetActive(false);
+		if (GameManager.Instance.getActiveCourseController().isFinal)
+		{
+			//yield return new WaitForSeconds(1.000f);
+			GameManager.Instance.Win(true);
+			//do somthing like return to menu screen
+		}
+		else
+		{
+			GameManager.Instance.gameState = GameManager.GameState.ACTIVE;
+			this.gameObject.SetActive(false);
+		}
 		
 	}
 

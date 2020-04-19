@@ -5,8 +5,12 @@ using UnityEngine;
 
 public class WinController : MonoBehaviour
 {
-
+    public TextMeshProUGUI punText;
     public TextMeshProUGUI scoreText;
+
+    public GameObject nextHoleButton;
+    public GameObject retryButton;
+    public bool isFinal = false;
     // Start is called before the first frame update
     void Start()
     {
@@ -16,7 +20,18 @@ public class WinController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score:" + GameManager.Instance.aggregatedScore;
+        if (isFinal)
+        {
+            scoreText.text = "Final Score:" + GameManager.Instance.finalScore;
+            punText.text = "Thanks for playing, this fish is now safe!";
+            nextHoleButton.SetActive(false);
+            retryButton.SetActive(false);
+        }
+        else
+        {
+            scoreText.text = "Score:" + GameManager.Instance.aggregatedScore;
+        }
+        
     }
 
     public void LoadNextHole()

@@ -23,13 +23,14 @@ public class GameManager : Singleton<GameManager>
     public List<GameObject> levels;
 
     float timeSinceLastCall;
+    internal int finalScore = 0;
 
     public bool isGameOver { get; set; } = false;
     // Start is called before the first frame update
     void Start()
     {
         //initial Level Loaded
-       loadLevel(5);
+       loadLevel(0);
     }
 
     // Update is called once per frame
@@ -49,6 +50,8 @@ public class GameManager : Singleton<GameManager>
         aggregatedScore = (int)(StatusTracker.Instance.timeLeft / strokeCount) * 10;
         if (aggregatedScore <= 1)
             aggregatedScore = 10;
+
+        finalScore += aggregatedScore;
         Debug.Log(aggregatedScore);
     }
     internal void GameOver()
@@ -64,20 +67,20 @@ public class GameManager : Singleton<GameManager>
         goldFish.GetComponent<FishController>().Die();
     }
 
-    internal void Win()
+    internal void Win(bool isFinal = false)
     {
         
         if (GameManager.Instance.gameState == GameManager.GameState.PAUSED)
             return;
 
-        if (timeSinceLastCall < 10)
+        if (timeSinceLastCall < 10 && !isFinal)
             return;
 
         timeSinceLastCall = 0;
         CalculateScore();
         gameState = GameState.PAUSED;
 
-        StartCoroutine(showWinCanvas(0));
+        StartCoroutine(showWinCanvas(0,isFinal));
 
         //goldFish.GetComponent<FishController>().Die();
     }
@@ -88,9 +91,10 @@ public class GameManager : Singleton<GameManager>
         gameOverScreen.SetActive(true);
         gameOverScreen.GetComponent<GameOverController>().generateWittyGameOverPun();
     }
-    private IEnumerator showWinCanvas(float time)
+    private IEnumerator showWinCanvas(float time, bool isFinal = false)
     {
         yield return new WaitForSeconds(time);
+        winScreen.GetComponent<WinController>().isFinal = isFinal;
         winScreen.SetActive(true);
     }
     public void loadLevel(int level, bool isRestart=false)
