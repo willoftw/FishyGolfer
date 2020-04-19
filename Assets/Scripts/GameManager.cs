@@ -108,7 +108,7 @@ public class GameManager : Singleton<GameManager>
             dialogScreen.GetComponent<DialogController>().ReplayDialog();
         }
         //gameState = GameState.ACTIVE;
-        while (goldFish == null) { }
+        //while (goldFish == null) { }
         goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);

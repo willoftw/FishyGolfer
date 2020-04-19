@@ -8,7 +8,7 @@ public class DialogController : MonoBehaviour
 	public TextMeshProUGUI speechText;
 	string fullText;
 
-	void Start()
+	void Awake()
 	{
 		fullText = GameManager.Instance.getActiveCourseController().Dialog;
 		speechText.text = "";
