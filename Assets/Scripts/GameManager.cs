@@ -14,6 +14,7 @@ public class GameManager : Singleton<GameManager>
     public GameState gameState = GameState.ACTIVE;
 
     public GameObject gameOverScreen;
+    public GameObject winScreen;
     public GameObject goldFish;
 
     public bool isGameOver { get; set; } = false;
@@ -44,13 +45,28 @@ public class GameManager : Singleton<GameManager>
         goldFish.GetComponent<FishController>().Die();
     }
 
+    internal void Win()
+    {
+        if (GameManager.Instance.gameState == GameManager.GameState.PAUSED)
+            return;
+        gameState = GameState.PAUSED;
+
+        StartCoroutine(showWinCanvas(1));
+
+        //goldFish.GetComponent<FishController>().Die();
+    }
+
     private IEnumerator showGameOverCanvas(float time)
     {
         yield return new WaitForSeconds(time);
         gameOverScreen.SetActive(true);
         gameOverScreen.GetComponent<GameOverController>().generateWittyGameOverPun();
     }
-
+    private IEnumerator showWinCanvas(float time)
+    {
+        yield return new WaitForSeconds(time);
+        winScreen.SetActive(true);
+    }
     public void loadLevel(int level)
     {
 

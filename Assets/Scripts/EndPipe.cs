@@ -27,7 +27,6 @@ public class EndPipe : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collider)
     {
         Debug.Log("HOLE: " + collider.GetComponent<Rigidbody2D>().velocity.magnitude);
-
         if (collider.GetComponent<Rigidbody2D>().velocity.magnitude > maxFishVelocity)
         {
             tooFast = true;
@@ -56,13 +55,7 @@ public class EndPipe : MonoBehaviour
         }
     }
 
-    private void OntriggerEnter2D(Collider2D collider)
-    {
-        Debug.Log("HOLE: " + collider.GetComponent<Rigidbody2D>().velocity.magnitude);
-        if (collider.GetComponent<Rigidbody2D>().velocity.magnitude > maxFishVelocity)
-            return;
-       
-    }
+
 
     void Scored(Collider2D collider)
     {
@@ -80,6 +73,7 @@ public class EndPipe : MonoBehaviour
     {
         yield return new WaitForSeconds(time);
         sr.sprite = emptySprite;
+        GameManager.Instance.Win();
     }
 
 }

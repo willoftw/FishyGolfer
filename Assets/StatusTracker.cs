@@ -22,7 +22,7 @@ public class StatusTracker : MonoBehaviour
     {
         timeLeftInSeconds -= Time.deltaTime;
         string timeLeftVisual = "";
-        Debug.Log(timeLeftInSeconds / timeUnitPerDash);
+        //Debug.Log(timeLeftInSeconds / timeUnitPerDash);
         int dashesRemaining = (int)(timeLeftInSeconds / timeUnitPerDash);
 
         if (dashesRemaining < (totalSections/4))
