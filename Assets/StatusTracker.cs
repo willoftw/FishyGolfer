@@ -28,7 +28,7 @@ public class StatusTracker : Singleton<StatusTracker>
             return;
         timeLeft -= Time.deltaTime;
         string timeLeftVisual = "";
-        Debug.Log(timeLeft);
+        //Debug.Log(timeLeft);
         int dashesRemaining = (int)(timeLeft / timeUnitPerDash);
 
         if (dashesRemaining < (totalSections/4))

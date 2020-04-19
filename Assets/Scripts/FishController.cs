@@ -88,10 +88,18 @@ public class FishController : MonoBehaviour
 
         target = (ballStartPosition + -HitVector);//*10;
         journeyLength = Vector3.Distance(target, this.transform.position);
-        DrawLine(this.transform.position, target,Color.blue, 0.2f);
+        Debug.Log(journeyLength);
+        Color c;
+        if (journeyLength > 4)
+            c = Color.red;
+        else if (journeyLength < 2)
+            c = Color.green;
+        else
+            c = Color.yellow;
+        DrawLine(this.transform.position, target,c);
     }
 
-    void DrawLine(Vector3 start, Vector3 end, Color color, float duration = 0.2f)
+    void DrawLine(Vector3 start, Vector3 end, Color color)
     {
         lr.sortingOrder = 98;
         lr.material = new Material(Shader.Find("UI/Default"));
@@ -99,6 +107,12 @@ public class FishController : MonoBehaviour
         lr.SetWidth(0.1f, 0.1f);
         lr.SetPosition(0, start);
         lr.SetPosition(1, end);
+
+        lr.widthCurve = new AnimationCurve(
+            new Keyframe(0, 0.4f)
+            , new Keyframe(0.999f - 0.4f, 0.4f)  // neck of arrow
+            , new Keyframe(1 - 0.4f, 1f)  // max width of arrow head
+            , new Keyframe(1, 0f));  // tip of arrow
         //draw arrow at end
         //color based on force
     }
