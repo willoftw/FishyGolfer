@@ -722,8 +722,8 @@ GameObject:
   - component: {fileID: 997024927}
   - component: {fileID: 997024926}
   m_Layer: 0
-  m_Name: Pipe
-  m_TagString: Untagged
+  m_Name: Hole
+  m_TagString: Hole
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -738,7 +738,7 @@ CircleCollider2D:
   m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
@@ -821,6 +821,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emptySprite: {fileID: 21300000, guid: f327c10a8f8e10c43b59b8395ce5bdd7, type: 3}
   fullSprite: {fileID: 21300000, guid: f1885b97405770a489c2edd302a71ca7, type: 3}
+  maxFishVelocity: 0.5
 --- !u!95 &997024926
 Animator:
   serializedVersion: 3
@@ -1915,6 +1916,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Gold-Fishy
+      objectReference: {fileID: 0}
+    - target: {fileID: 6127455361241712500, guid: b98cd6519adbe364bab85313a30b48df,
+        type: 3}
+      propertyPath: m_TagString
+      value: Fish
       objectReference: {fileID: 0}
     - target: {fileID: 6127455361241712502, guid: b98cd6519adbe364bab85313a30b48df,
         type: 3}

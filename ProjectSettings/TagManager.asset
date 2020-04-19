@@ -8,6 +8,8 @@ TagManager:
   - Pit
   - Green
   - Indicator
+  - Hole
+  - Fish
   layers:
   - Default
   - TransparentFX

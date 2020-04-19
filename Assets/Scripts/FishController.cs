@@ -23,7 +23,7 @@ public class FishController : MonoBehaviour
 
     public float speed = 0.1F;
 
-    bool moving = false;
+    public bool moving = false;
     private float maxSpeed;
     public float dragFactor=1000;
 
@@ -112,15 +112,15 @@ public class FishController : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        Debug.Log("Fish Collided with: " + collision.gameObject.tag);
         ContactPoint2D contact = collision.GetContact(0);
         this.transform.position = new Vector3(contact.point.x, contact.point.y, 0);
-        
-        Debug.Log("Fish Collided with: " + collision.gameObject.tag);
+
     }
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Triggered Pit");
+
     }
 
 }
