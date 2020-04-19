@@ -7,7 +7,7 @@ public class GameManager : Singleton<GameManager>
 {
     public enum GameState { ACTIVE,PAUSED,GAMEOVER} // will add levels here too later
     public int strokeCount {get; protected set; } = 0; // How many strokes it took to get to the hole
-    public int arregatedScore { get; set; } = 0; // Strokes devided by how much time you took;
+    public int aggregatedScore { get; set; } = 0; // Strokes devided by how much time you took;
 
     public int currentLevel = 0;
 
@@ -26,7 +26,8 @@ public class GameManager : Singleton<GameManager>
     // Start is called before the first frame update
     void Start()
     {
-       loadLevel(0);
+        //initial Level Loaded
+       loadLevel(5);
     }
 
     // Update is called once per frame
@@ -41,8 +42,12 @@ public class GameManager : Singleton<GameManager>
 
     void CalculateScore()
     {
-        arregatedScore = (int)(StatusTracker.Instance.timeLeft / strokeCount);
-        Debug.Log(arregatedScore);
+        if (strokeCount <= 0)
+            return;
+        aggregatedScore = (int)(StatusTracker.Instance.timeLeft / strokeCount) * 10;
+        if (aggregatedScore <= 1)
+            aggregatedScore = 10;
+        Debug.Log(aggregatedScore);
     }
     internal void GameOver()
     {
@@ -88,6 +93,10 @@ public class GameManager : Singleton<GameManager>
     }
     public void loadLevel(int level)
     {
+        currentLevel = level;
+        goldFish.SetActive(true);
+        winScreen.SetActive(false);
+        gameOverScreen.SetActive(false);
         Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
         gameState = GameState.ACTIVE;
         goldFish.transform.position = levels[level].GetComponent<CourseController>().StartPoint.transform.position;

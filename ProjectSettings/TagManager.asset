@@ -10,6 +10,7 @@ TagManager:
   - Indicator
   - Hole
   - Fish
+  - Gull
   layers:
   - Default
   - TransparentFX

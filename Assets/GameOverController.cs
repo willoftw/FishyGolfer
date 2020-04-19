@@ -23,7 +23,7 @@ public class GameOverController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        scoreText.text = "Score:" + GameManager.Instance.arregatedScore;
+        scoreText.text = "Score:" + GameManager.Instance.aggregatedScore;
     }
 
     //Misleading Name, they arnt that Witty.

@@ -140,8 +140,10 @@ public class FishController : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
         Debug.Log("Fish Collided with: " + collision.gameObject.tag);
-        ContactPoint2D contact = collision.GetContact(0);
-        this.transform.position = new Vector3(contact.point.x, contact.point.y, 0);
+        if (collision.gameObject.tag == "Gull")
+            GameManager.Instance.GameOver();
+/*        ContactPoint2D contact = collision.GetContact(0);
+        this.transform.position = new Vector3(contact.point.x, contact.point.y, 0);*/
 
     }
 

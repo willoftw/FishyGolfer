@@ -5,7 +5,8 @@ using UnityEngine;
 public class ObsticalController : MonoBehaviour
 {
     //public static 
-    public float dragChange=0.0f;
+    public float enterDragChange=0.0f;
+    public float exitDragChange = 0.0f;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,13 +21,13 @@ public class ObsticalController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        other.attachedRigidbody.drag += dragChange;
+        other.attachedRigidbody.drag += enterDragChange;
         Debug.Log("Triggered: "+ other.tag);
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        other.attachedRigidbody.drag -= dragChange;
+        other.attachedRigidbody.drag += exitDragChange;
     }
 
 }
