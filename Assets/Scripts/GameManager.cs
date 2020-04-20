@@ -107,17 +107,10 @@ public class GameManager : Singleton<GameManager>
             dialogScreen.SetActive(true);
             dialogScreen.GetComponent<DialogController>().ReplayDialog();
         }
-        //gameState = GameState.ACTIVE;
+        gameState = GameState.ACTIVE;
         //while (goldFish == null) { }
-        try
-        {
-            goldFish.SetActive(true);
-        }
-        catch(Exception e)
-        {
-            var gm = GameManager.Instance;
-            StartCoroutine(delayLoadCurrent(1.0f));
-        }
+
+        goldFish.SetActive(true);
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
