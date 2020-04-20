@@ -12,8 +12,12 @@ public class GameOverController : MonoBehaviour
     {
         "That couldnt have Breem easier!",
         "He swam with the fishes...",
-        "I'll get the Chips on",
-        "Oh my Cod, He's Dead!"
+        "I'll get the Chips on.",
+        "Oh my Cod, He's Dead!",
+        "Im sure your just fine TUNAing.",
+        "That was Eeely bad.",
+        "You didn't quite free Willy",
+        "Cod have done Batter"
     };
     // Start is called before the first frame update
     void Start()
