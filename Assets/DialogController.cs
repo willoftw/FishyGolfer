@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class DialogController : MonoBehaviour
+public class DialogController : Singleton<DialogController>
 {
 	public TextMeshProUGUI speechText;
 	string fullText;

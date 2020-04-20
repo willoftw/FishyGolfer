@@ -53,7 +53,6 @@ public class WinController : MonoBehaviour
 
     public void BackToMainMenu()
     {
-        Destroy(GameManager.Instance);
         SceneManager.LoadScene(0);
     }
 }

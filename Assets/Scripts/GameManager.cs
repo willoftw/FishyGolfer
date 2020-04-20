@@ -109,7 +109,15 @@ public class GameManager : Singleton<GameManager>
         }
         //gameState = GameState.ACTIVE;
         //while (goldFish == null) { }
-        goldFish.SetActive(true);
+        try
+        {
+            goldFish.SetActive(true);
+        }
+        catch(Exception e)
+        {
+            var gm = GameManager.Instance;
+            StartCoroutine(delayLoadCurrent(1.0f));
+        }
         winScreen.SetActive(false);
         gameOverScreen.SetActive(false);
         Camera.main.GetComponent<CameraFollower>().transistionSpeed = 25.0f;
@@ -149,7 +157,17 @@ public class GameManager : Singleton<GameManager>
 
     }
 
-    public CourseController getActiveCourseController()
+        private IEnumerator delayLoadCurrent(float time)
+        {
+            loadLevel(currentLevel);
+            goldFish.SetActive(true);
+            winScreen.SetActive(false);
+            gameOverScreen.SetActive(false);
+            yield return new WaitForSeconds(time);
+
+        }
+
+        public CourseController getActiveCourseController()
     {
         try
         {
